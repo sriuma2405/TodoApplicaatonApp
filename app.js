@@ -73,14 +73,12 @@ const checkRequestsQueries = async (request, response, next) => {
       const myDate = new Date(date);
 
       const formatedDate = format(new Date(date), "yyyy-MM-dd");
-      console.log(formatedDate, "f");
       const result = toDate(
         new Date(
           `${myDate.getFullYear()}-${myDate.getMonth() + 1}-${myDate.getDate()}`
         )
       );
       const isValidDate = await isValid(result);
-      console.log(isValidDate, "V");
       if (isValidDate === true) {
         request.date = formatedDate;
       } else {
@@ -172,7 +170,6 @@ const checkRequestsBody = (request, response, next) => {
 //Get Todos API-1
 app.get("/todos/", checkRequestsQueries, async (request, response) => {
   const { status = "", search_q = "", priority = "", category = "" } = request;
-  console.log(status, search_q, priority, category);
   const getTodosQuery = `
         SELECT 
             id,
@@ -269,7 +266,6 @@ app.put("/todos/:todoId/", checkRequestsBody, async (request, response) => {
 
   let updateTodoQuery = null;
 
-  console.log(priority, todo, status, dueDate, category);
   switch (true) {
     case status !== undefined:
       updateTodoQuery = `
